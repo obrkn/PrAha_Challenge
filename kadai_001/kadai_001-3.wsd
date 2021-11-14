@@ -1,0 +1,97 @@
+' 追加課題 --- 注文ごとに特記事項をメモできるようにして欲しい
+@startuml sushi
+
+hide circle
+
+entity "set_categories" as SC {
+  id : int [PK]
+  --
+  name : varchar
+  deleted_at : datetime
+  created_at : datetime
+  updated_at : datetime
+}
+
+entity "set_products" as SP {
+  id : int [PK]
+  --
+  set_category_id : int [FK]
+  name : varchar
+  price : int
+  deleted_at : datetime
+  created_at : datetime
+  updated_at : datetime
+}
+
+entity "individual_categories" as IC {
+  id : int [PK]
+  --
+  name : varchar
+  price : int
+  deleted_at : datetime
+  created_at : datetime
+  updated_at : datetime
+}
+
+entity "individual_products" as IP {
+  id : int [PK]
+  --
+  individual_category_id : int [FK]
+  name : varchar
+  can_takeout : boolean
+  deleted_at : datetime
+  created_at : datetime
+  updated_at : datetime
+}
+
+entity "orders" as O {
+  id : int [PK]
+  --
+  name : varchar
+  phone_number : varchar
+  total_price : int
+  tax : int
+  paid_at : datetime
+  ' ========== 追記 ==========
+  memo : text
+  deleted_at : datetime
+  created_at : datetime
+  updated_at : datetime
+}
+
+entity "orders_set_products" as OSP {
+  id : int [PK]
+  --
+  order_id : number [FK]
+  set_product_id : number [FK]
+  total_price : int
+  number : int
+  without_wasabi : boolean
+  rice_type : int
+  deleted_at : datetime
+  created_at : datetime
+  updated_at : datetime
+}
+
+entity "orders_individual_products" as OIP {
+  id : int [PK]
+  --
+  order_id : number [FK]
+  individual_product_id : number [FK]
+  total_price : int
+  number : int
+  without_wasabi : boolean
+  rice_type : int
+  deleted_at : datetime
+  created_at : datetime
+  updated_at : datetime
+}
+
+SC --o{ SP
+IC --o{ IP
+O --o{ OSP
+O --o{ OIP
+SP --o{ OSP
+IP --o{ OIP
+
+@enduml
