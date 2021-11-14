@@ -1,0 +1,85 @@
+@startuml slack
+
+hide circle
+
+entity "users" as U {
+  id : int [PK]
+  --
+  deleted_at : datetime
+  created_at : datetime
+  updated_at : datetime
+}
+
+entity "workspaces" as W {
+  id : int [PK]
+  --
+  name : varchar
+  deleted_at : datetime
+  created_at : datetime
+  updated_at : datetime
+}
+
+entity "channels" as C {
+  id : int [PK]
+  --
+  workspace_id : int [FK]
+  name : varchar
+  deleted_at : datetime
+  created_at : datetime
+  updated_at : datetime
+}
+
+entity "messages" as M {
+  id : int [PK]
+  --
+  channel_id : int [FK]
+  user_id : int [FK]
+  content : text
+  deleted_at : datetime
+  created_at : datetime
+  updated_at : datetime
+}
+
+entity "thread_messages" as TM {
+  id : int [PK]
+  --
+  channel_id : int [FK]
+  message_id : int [FK]
+  user_id : int [FK]
+  content : text
+  deleted_at : datetime
+  created_at : datetime
+  updated_at : datetime
+}
+
+entity "workspaces_users" as WU {
+  id : int [PK]
+  --
+  workspace_id : int [FK]
+  user_id : int [FK]
+  deleted_at : datetime
+  created_at : datetime
+  updated_at : datetime
+}
+
+entity "channels_users" as CU {
+  id : int [PK]
+  --
+  channel_id : int [FK]
+  user_id : int [FK]
+  deleted_at : datetime
+  created_at : datetime
+  updated_at : datetime
+}
+
+W --o{ C
+C --o{ M
+M --o{ TM
+U --o{ M
+U --o{ TM
+U --o{ WU
+W --o{ WU
+U --o{ CU
+C --o{ CU
+
+@enduml
