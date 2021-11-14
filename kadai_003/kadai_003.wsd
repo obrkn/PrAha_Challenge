@@ -1,0 +1,70 @@
+@startuml document
+
+hide circle
+
+entity "users" as U {
+  id : int [PK]
+  --
+  deleted_at : datetime
+  created_at : datetime
+  updated_at : datetime
+}
+
+entity "directories" as D {
+  id : int [PK]
+  --
+  name : varchar
+  ' パフォーマンス的に良いか疑問
+  parent_directory_id : int
+  deleted_at : datetime
+  created_at : datetime
+  updated_at : datetime
+}
+
+entity "documents" as DC {
+  id : int [PK]
+  --
+  directory_id : int [FK]
+  name : varchar
+  text : text
+  deleted_at : datetime
+  created_at : datetime
+  updated_at : datetime
+}
+
+entity "directories_logs" as DL {
+  id : int [PK]
+  --
+  directory_id : int [FK]
+  user_id : int [FK]
+  crud_type : int
+  before_name : varchar
+  after_name : varchar
+  deleted_at : datetime
+  created_at : datetime
+  updated_at : datetime
+}
+
+entity "documents_logs" as DCL {
+  id : int [PK]
+  --
+  document_id : int [FK]
+  user_id : int [FK]
+  crud_type : int
+  before_name : varchar
+  after_name : varchar
+  before_text : text
+  after_text : text
+  deleted_at : datetime
+  created_at : datetime
+  updated_at : datetime
+}
+
+D --o{ D
+D --o{ DC
+D --o{ DL
+U --o{ DL
+DC --o{ DCL
+U --o{ DCL
+
+@enduml
