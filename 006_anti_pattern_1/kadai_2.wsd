@@ -1,0 +1,27 @@
+@startuml タグ
+
+object 投稿 {
+  ID
+  --
+  内容
+  削除日時
+  作成日時
+  更新日時
+}
+
+object タグ {
+  ID
+  --
+  タグ名
+  削除日時
+  作成日時
+  更新日時
+}
+
+note right of 投稿
+投稿とタグは多対多の関係
+end note
+
+投稿 }o--o{ タグ
+
+@enduml
