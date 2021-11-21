@@ -1,0 +1,32 @@
+@startuml 読書
+
+object Mangas {
+  id[Pk]
+  --
+  name
+}
+
+object Novels {
+  id[Pk]
+  --
+  name
+}
+
+object MangasComments {
+  id[PK]
+  --
+  manga_id[FK]
+  text
+}
+
+object NovelsComments {
+  id[PK]
+  --
+  novel_id[FK]
+  text
+}
+
+Mangas --o{ MangasComments
+Novels --o{ NovelsComments
+
+@enduml
